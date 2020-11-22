@@ -27,6 +27,12 @@ class CircularProgressBar: UIView {
     
     //MARK: Public
     
+    public var enablePulse: Bool = true {
+        didSet{
+            isEnablePulse = enablePulse
+        }
+    }
+    
     public var lineWidth:CGFloat = 15 {
         didSet{
             foregroundLayer.lineWidth = lineWidth
@@ -126,6 +132,7 @@ class CircularProgressBar: UIView {
     
     
     //MARK: Private
+    private var isEnablePulse : Bool = true
     private var label = UILabel()
     private var labelPercent = UILabel()
     private var labelComplete = UILabel()
@@ -142,8 +149,10 @@ class CircularProgressBar: UIView {
     private var pathCenter: CGPoint{ get{ return self.convert(self.center, from:self.superview) } }
     private func makeBar(){
         self.layer.sublayers = nil
-        drawPulsatingLayer()
-        self.animatePulsatingLayer()
+        if isEnablePulse {
+            drawPulsatingLayer()
+            self.animatePulsatingLayer()
+        }
         drawBackgroundLayer()
         drawForegroundLayer()
     }
